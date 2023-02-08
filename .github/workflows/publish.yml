@@ -27,6 +27,9 @@ jobs:
           distribution: "adopt"
           cache: "gradle"
 
+      - name: Set execution flag
+        run: chmod +x ./gradlew
+
       - name: Build package
         run: ./gradlew build --no-daemon
 
