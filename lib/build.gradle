@@ -16,6 +16,19 @@ repositories {
     mavenCentral()
 }
 
+publishing {
+  repositories {
+    maven {
+      name = "GitHubPackages"
+      url = "https://maven.pkg.github.com/tortitast/jenu"
+      credentials {
+        username = System.getenv("GITHUB_ACTOR")
+        password = System.getenv("GITHUB_TOKEN")
+      }
+    }
+  }
+}
+
 dependencies {
     // Use JUnit test framework.
     testImplementation 'junit:junit:4.13.2'
