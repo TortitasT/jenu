@@ -3,11 +3,23 @@
  */
 package jenu;
 
+import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 import java.lang.reflect.Method;
 
 public class Jenu {
+  @Retention(RetentionPolicy.RUNTIME)
+  @Target({ ElementType.METHOD })
+  public @interface JenuEntry {
+    int index();
+
+    String name();
+
+    String description();
+  }
+
   public String getTitle() {
     return "Jenu";
   }
@@ -52,13 +64,4 @@ public class Jenu {
       }
     }
   }
-}
-
-@Retention(RetentionPolicy.RUNTIME)
-@interface JenuEntry {
-  int index();
-
-  String name();
-
-  String description();
 }
