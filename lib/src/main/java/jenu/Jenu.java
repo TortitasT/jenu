@@ -53,16 +53,20 @@ public class Jenu {
 
   public void query() {
     while (true) {
+      System.out.println("");
+
       this.show();
       System.out.print("> ");
 
-      int choice = Integer.parseInt(
-          new java.util.Scanner(System.in).nextLine());
-
       try {
+        int choice = Integer.parseInt(
+            new java.util.Scanner(System.in).nextLine());
+
         if (!!!this.run(choice, Boolean.class)) {
           break;
         }
+
+        System.out.println("");
       } catch (Exception e) {
         System.out.println("Invalid input");
         continue;

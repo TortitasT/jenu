@@ -7,6 +7,6 @@ Menu system for the terminal.
 - Gradle
 ```bash
 dependencies {
-  implementation 'jenu:lib:0.1.6'
+  implementation 'jenu:lib:0.1.10'
 }
 ```
