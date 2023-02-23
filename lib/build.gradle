@@ -44,12 +44,16 @@ publishing {
             name = "MavenCentral"
             url = "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
             credentials {
-                username = "${sonatypeUsername}"
-                password = "${sonatypePassword}"
+                username = System.getProperty("ossrhUsername")
+                password = System.getProperty("ossrhPassword")
             }
         }
     }
 }
+
+println "Remember to set the following environment variables: systemProp.ossrhUsername, systemProp.ossrhPassword, signing.keyId, signing.password, signing.secretKeyRingFile"
+println "ossrhUsername: " + System.getProperty("ossrhUsername")
+// println "ossrhPassword: " + System.getProperty("ossrhPassword")
 
 java {
     withJavadocJar()
