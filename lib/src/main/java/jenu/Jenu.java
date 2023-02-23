@@ -20,10 +20,18 @@ public class Jenu {
     String description();
   }
 
+  /**
+   * Change this to return the title of your menu
+   * 
+   * @return String
+   */
   public String getTitle() {
     return "Jenu";
   }
 
+  /**
+   * Print the title and options of the menu
+   */
   public void show() {
     System.out.println("==" + "=".repeat(this.getTitle().length()) + "==");
     System.out.println("| " + this.getTitle() + " |");
@@ -37,11 +45,17 @@ public class Jenu {
     }
   }
 
+  /**
+   * Run specific menu option by index and return the result as the specified
+   * type.
+   */
   public <T> T run(int index, Class<T> returnType) {
     for (Method method : this.getClass().getDeclaredMethods()) {
       JenuEntry annotation = method.getAnnotation(JenuEntry.class);
       if (annotation != null && annotation.index() == index) {
         try {
+          this.before();
+
           return returnType.cast(method.invoke(this));
         } catch (Exception e) {
           throw new RuntimeException(e);
@@ -51,6 +65,9 @@ public class Jenu {
     return null;
   }
 
+  /**
+   * Run the menu and query the user for input, main method of the menu.
+   */
   public void query() {
     while (true) {
       System.out.println("");
@@ -62,15 +79,23 @@ public class Jenu {
         int choice = Integer.parseInt(
             new java.util.Scanner(System.in).nextLine());
 
+        System.out.println("");
+
         if (!!!this.run(choice, Boolean.class)) {
           break;
         }
 
-        System.out.println("");
       } catch (Exception e) {
-        System.out.println("Invalid input");
+        System.out.println("Error in input:\n" + e.getMessage());
         continue;
       }
     }
+  }
+
+  /**
+   * This will run before each entry is called. Override this to add custom.
+   */
+  public void before() {
+    return;
   }
 }
