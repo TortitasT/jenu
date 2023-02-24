@@ -4,8 +4,10 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.lang.reflect.Array;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 /**
  * Jenu is a simple menu system for Java that uses annotations to add menu
@@ -60,11 +62,22 @@ public class Jenu {
     System.out.println("| " + this.getTitle() + " |");
     System.out.println("==" + "=".repeat(this.getTitle().length()) + "==");
 
-    for (Method method : this.getClass().getDeclaredMethods()) {
+    var orderedMethods = Arrays.stream(
+        this.getClass().getDeclaredMethods()).filter(
+            method -> method.getAnnotation(JenuEntry.class) != null)
+        .sorted(
+            (method1, method2) -> {
+              JenuEntry annotation1 = method1.getAnnotation(JenuEntry.class);
+              JenuEntry annotation2 = method2.getAnnotation(JenuEntry.class);
+
+              return annotation1.index() - annotation2.index();
+            })
+        .toArray(Method[]::new);
+
+    for (Method method : orderedMethods) {
       JenuEntry annotation = method.getAnnotation(JenuEntry.class);
-      if (annotation != null) {
-        System.out.println(annotation.index() + ". " + annotation.name());
-      }
+
+      System.out.println(annotation.index() + ". " + annotation.name());
     }
   }
 
@@ -114,6 +127,11 @@ public class Jenu {
         }
 
       } catch (Exception e) {
+        if (e.getCause() == null) {
+          System.out.println("Error in input:\n" + e.getMessage());
+          continue;
+        }
+
         System.out.println("Error in input:\n" + e.getCause().getMessage());
         continue;
       }
