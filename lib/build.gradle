@@ -66,7 +66,7 @@ signing {
 
 archivesBaseName = 'jenu'
 group = 'eu.tortitas.jenu'
-version System.getenv("GITHUB_TAG") ?: "1.0.1"
+version System.getenv("GITHUB_TAG") ?: "1.0.2"
 
 repositories {
     // Use Maven Central for resolving dependencies.
@@ -82,4 +82,10 @@ dependencies {
 
     // This dependency is used internally, and not exposed to consumers on their own compile classpath.
     implementation 'com.google.guava:guava:31.1-jre'
+}
+
+task run(type: JavaExec) {
+    main = 'jenu.App'
+    classpath = sourceSets.main.runtimeClasspath
+    standardInput = System.in
 }

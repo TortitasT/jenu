@@ -4,6 +4,7 @@ import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
 /**
@@ -75,18 +76,18 @@ public class Jenu {
    * @param returnType the type to return
    * @param <T>        the type to return
    * @return T the result of the menu option
+   * @throws InvocationTargetException
+   * @throws IllegalArgumentException
+   * @throws IllegalAccessException
    */
-  public <T> T run(int index, Class<T> returnType) {
+  public <T> T run(int index, Class<T> returnType)
+      throws Exception {
     for (Method method : this.getClass().getDeclaredMethods()) {
       JenuEntry annotation = method.getAnnotation(JenuEntry.class);
       if (annotation != null && annotation.index() == index) {
-        try {
-          this.before();
+        this.before();
 
-          return returnType.cast(method.invoke(this));
-        } catch (Exception e) {
-          throw new RuntimeException(e);
-        }
+        return returnType.cast(method.invoke(this));
       }
     }
     return null;
@@ -113,7 +114,7 @@ public class Jenu {
         }
 
       } catch (Exception e) {
-        System.out.println("Error in input:\n" + e.getMessage());
+        System.out.println("Error in input:\n" + e.getCause().getMessage());
         continue;
       }
     }

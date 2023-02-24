@@ -30,7 +30,12 @@ public class JenuTest {
     public void testRun() {
         TestMenu menu = new TestMenu();
 
-        assertEquals("Hello", menu.run(0, String.class));
+        try {
+            assertEquals("Hello", menu.run(0, String.class));
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     @Test
