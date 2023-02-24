@@ -7,7 +7,7 @@ CLI menu library for Java using Scanner.
 - Gradle
 ```bash
 dependencies {
-    implementation 'eu.tortitas.jenu:lib:1.0.1'
+    implementation 'eu.tortitas.jenu:lib:1.0.2'
 }
 ```
 
@@ -16,7 +16,7 @@ dependencies {
 <dependency>
     <groupId>eu.tortitas.jenu</groupId>
     <artifactId>lib</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
 </dependency>
 ```
 
